@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang='en'>
+
+<head>
+    <title>Shopping List</title>
+    <meta charset='utf-8'>
+    <link href=data:, rel=icon>
+
+    <script src='https://unpkg.com/vue@next' defer></script>
+    <script src='script.js' defer></script>
+    <style>
+        [v-cloak] {
+            display: none
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Shopping List</h1>
+
+    <div id='app' v-cloak>
+        <label>
+            Item:
+            <input type='text' v-model='item'>
+            <button v-on:click='addItem()'>Add</button>
+        </label>
+        <p></p>
+        <span v-if='items.length === 0'>Item count: {{ items.length }}</span>
+        <div v-if='items.length > 0'>
+            <span>Item count: {{ items.length }}</span>
+            <ul>
+                <li v-for='item in items'>{{ item }}</li>
+            </ul>
+        </div>
+
+        <p v-if='correct'>You guessed the mystery number!</p>
+    </div>
+</body>
+
+</html>
