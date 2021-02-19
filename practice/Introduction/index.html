@@ -20,20 +20,27 @@
 
     <div id='app' v-cloak>
         <label>
-            Item:
-            <input type='text' v-model='item'>
-            <button v-on:click='addItem()'>Add</button>
+            Qty:
+            <input type='number' v-model.number='quantity'>
         </label>
-        <p></p>
-        <span v-if='items.length === 0'><i>You have no items on your list.</i></span>
-        <div v-if='items.length > 0'>
-            <span>Item count: {{ items.length }}</span>
-            <ul>
-                <li v-for='item in items'>{{ item }}</li>
-            </ul>
-        </div>
+        <label>
+            Item:
+            <input type='text' v-model='item' v-on:keyup.enter='addItem'>
+        </label>
+        <button v-on:click='addItem'>Add</button>
+        <p>
+            <span v-if='items.length === 0'><i>You have no items on your list.</i></span>
+            <template v-else>
+                <span>Item count: {{ this.$data.total }}</span>
+                <ul>
+                    <li v-for='(item, index) in items'>
+                        <button v-on:click='removeItem(index)'>x</button>
+                        {{ item.quantity }} x {{item.item }}
+                    </li>
+                </ul>
+            </template>
+        </p>
 
-        <p v-if='correct'>You guessed the mystery number!</p>
     </div>
 </body>
 
