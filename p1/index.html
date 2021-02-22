@@ -2,7 +2,7 @@
 <html lang='en'>
 
 <head>
-    <title>Shopping List</title>
+    <title>A Game of Hi-Low</title>
     <meta charset='utf-8'>
     <link href=data:, rel=icon>
 
@@ -16,25 +16,25 @@
 </head>
 
 <body>
-    <h1>Shopping List</h1>
+    <h1>A Game of Hi-Low</h1>
 
     <div id='app' v-cloak>
-        <label>
-            Item:
-            <input type='text' v-model='item'>
-            <button v-on:click='addItem()'>Add</button>
-        </label>
-        <p></p>
-        <span v-if='items.length === 0'><i>You have no items on your list.</i></span>
-        <div v-if='items.length > 0'>
-            <span>Item count: {{ items.length }}</span>
-            <ul>
-                <li v-for='item in items'>{{ item }}</li>
-            </ul>
+        <button id='startButton' v-on:click='startGame()'>Start New Game</button>
+        <div v-show='gameCount > 0'>
+            <p>
+                <span> {{ instructions }}</span>
+            </p>
+            <p>
+                <span> You have {{ remainingGuesses }} guesses remaining.</span>
+            </p>
+            <p>
+                <label>
+                    Guess:
+                    <input type='number' v-model.number='currentGuess' v-on:keyup.enter='guessNumber()'>
+                </label>
+                <button id='guessButton' v-on:click='guessNumber()'>Guess</button>
+            </p>
         </div>
-
-        <p v-if='correct'>You guessed the mystery number!</p>
-    </div>
 </body>
 
 </html>
