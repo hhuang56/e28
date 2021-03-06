@@ -96,5 +96,23 @@ const ShoppingList = {
     }
 }
 
+const GuessFeedback = {
+    name: 'GuessFeedback',
+    props: {
+        winning: {
+            type: Boolean
+        },
+        wrong: {
+            type: Boolean
+        },
+        feedback: {
+            type: String
+        }
+    },
+    template: '#guess-feedback',
+};
+
 // Create a new Vue instance using our options
-const app = Vue.createApp(ShoppingList).mount('#app');
+const app = Vue.createApp(ShoppingList);
+app.component('guess-feedback', GuessFeedback);
+app.mount('#app');

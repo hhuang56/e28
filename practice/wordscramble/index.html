@@ -66,10 +66,15 @@
                 <button id='guessButton' v-on:click='guessWord()'>Guess</button>
             </p>
         </div>
+        <guess-feedback v-bind:winning='winning' v-bind:wrong='wrong' v-bind:feedback='feedback'
+            v-on:start-game='startGame($event)'></guess-feedback>
+    </div>
+    <script type='text/x-template' id='guess-feedback'>
         <div>
             <span v-bind:class='{correct: winning, error: wrong}'>{{ feedback }}</span>
-            <button v-if='winning' id='playAgain' v-on:click='startGame()'>Play Again</button>
+            <button v-if='winning' id='playAgain' v-on:click='$emit("start-game")'>Play Again</button>
         </div>
+    </script>
 </body>
 
 </html>
