@@ -12,6 +12,47 @@
         [v-cloak] {
             display: none
         }
+
+        .error {
+            color: red;
+        }
+
+        .correct {
+            color: green;
+        }
+
+        body {
+            text-align: center;
+        }
+
+        #questionGuy {
+            width: 100px;
+            height: auto;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+        }
+
+        table,
+        tr {
+            width: 100%;
+        }
+
+        td {
+            width: 50%;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #guess-feedback-section {
+            height: 75px;
+        }
     </style>
 </head>
 
@@ -19,13 +60,15 @@
     <h1>A Game of Hi-Low</h1>
 
     <div id='app' v-cloak>
-        <button id='startButton' v-on:click='startGame()'>Start New Game</button>
+        <p><img v-bind:src='imageSource' v-bind:alt='imageAlt' id='questionGuy'></p>
+        <button id='startButton' v-on:click='startNewGame()'>New Game</button>
         <div v-show='gameCount > 0'>
+            <h3>Round {{ gameCount }}</h3>
             <p>
                 <span> {{ instructions }}</span>
             </p>
             <p>
-                <span> You have {{ remainingGuesses }} guesses remaining.</span>
+                <span> You have {{ guesses }} guesses remaining.</span>
             </p>
             <p>
                 <label>
@@ -34,7 +77,58 @@
                 </label>
                 <button id='guessButton' v-on:click='guessNumber()'>Guess</button>
             </p>
+            <guess-feedback v-bind:guesses='guesses' v-bind:winning='winning' v-bind:feedback='feedback'
+                v-bind:round-over='roundOver' v-bind:game-over='gameOver' v-bind:game-count='gameCount'
+                v-on:next-game='nextGame($event)'>
+            </guess-feedback>
+            <score-board v-bind:scores='scores' v-bind:history='history' v-on:reset-game='resetGame($event)'>
+            </score-board>
         </div>
+    </div>
+    <script type='text/x-template' id='guess-feedback'>
+        <div id='guess-feedback-section'>
+            &nbsp;
+            <span v-bind:class='{correct: winning, error: !winning}'>{{ feedback }}</span>
+            <p v-if='gameOver'>
+                <span>You won {{ gameCount - 1 }} round{{ gameCount !== 2 ? 's' : '' }}. Start a new game to play again.</span>
+            </p>
+            <p v-if='roundOver && !gameOver'>
+                <button id='playAgain' v-on:click='$emit("next-game")'>Start the Next Round!</button>
+            </p>
+
+        </div>
+    </script>
+    <script type='text/x-template' id='score-board'>
+        <div>
+            <table>
+                <tr>
+                    <th>Current Game</th>
+                    <th>History</th>
+                </tr>
+                <tr>
+                    <td>
+                        <span v-if='scores.length === 0'><i>No rounds played yet.</i></span>
+                        <ul>
+                            <li v-for='score in scores'>
+                                Round {{score.gameCount}}: {{ score.winner }} won after {{ score.numGuesses }} guesses
+                            </li>
+                        </ul>
+                    </td>
+                    <td>
+                        <span v-if='history.length === 0'><i>No full games played yet.</i></span>
+                        <ul>
+                            <li v-for='game in history'>
+                                Player made it to round {{ game.rounds }}
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+            <p>
+                <button id='resetbutton' v-on:click='$emit("reset-game")'>Reset All</button>
+            </p>
+        </div>
+    </script>
 </body>
 
 </html>
