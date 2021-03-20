@@ -11,4 +11,4 @@ Lists without bullets: https://www.w3schools.com/howto/howto_css_list_without_bu
 
 
 ## Notes for instructor
-*any notes for me to refer to while grading; if none, omit this section*
+In this game of Hi-Low, the goal is to guess as many mystery numbers as possible starting with 10 guesses. A full game is over when you've run out of guesses. A round is over when you've either guessed the mystery number of run out of guesses.

@@ -1,4 +1,3 @@
-// Define the options of our application
 const HiLow = {
     data() {
         return {
@@ -28,12 +27,10 @@ const HiLow = {
             this.roundOver = false;
             this.gameOver = false;
             this.mysteryNumber = Math.floor(Math.random() * 10 + 1);
-            console.log(`secret number is: ${this.mysteryNumber}`);
             this.guesses = 10;
             this.guessCount = 0;
             this.gameCount = 1;
             this.scores = [];
-            console.log(`gamecount is ${this.gameCount}`);
         },
         nextGame() {
             this.feedback = '';
@@ -42,10 +39,8 @@ const HiLow = {
             this.currentGuess = null;
             this.previousGuesses = [];
             this.mysteryNumber = Math.floor(Math.random() * 10 + 1);
-            console.log(`secret number is: ${this.mysteryNumber}`);
             this.guessCount = 0;
             this.gameCount++;
-            console.log(`gamecount is ${this.gameCount}`);
         },
         resetGame() {
             this.feedback = '';
@@ -55,16 +50,13 @@ const HiLow = {
             this.gameOver = false;
             this.winning = false;
             this.mysteryNumber = Math.floor(Math.random() * 10 + 1);
-            console.log(`secret number is: ${this.mysteryNumber}`);
             this.guesses = 10;
             this.guessCount = 0;
             this.gameCount = 1;
             this.scores = [];
             this.history = [];
-            console.log(`gamecount is ${this.gameCount}`);
         },
         guessNumber() {
-            console.log(`guess is ${this.currentGuess}`)
             if (!this.gameOver) {
                 if (this.currentGuess === null || this.currentGuess === '') {
                     this.feedback = "I didn't quite understand you. Please try again."
@@ -147,7 +139,6 @@ const ScoreBoard = {
     template: '#score-board',
 };
 
-// Create a new Vue instance using our options
 const app = Vue.createApp(HiLow);
 app.component('guess-feedback', GuessFeedback);
 app.component('score-board', ScoreBoard);
