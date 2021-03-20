@@ -51,7 +51,7 @@
         }
 
         #guess-feedback-section {
-            height: 75px;
+            height: 100px;
         }
     </style>
 </head>
@@ -60,7 +60,14 @@
     <h1>A Game of Hi-Low</h1>
 
     <div id='app' v-cloak>
-        <p><img v-bind:src='imageSource' v-bind:alt='imageAlt' id='questionGuy'></p>
+        <div v-show='gameCount === 0'>
+            <p><img v-bind:src='imageSource' v-bind:alt='imageAlt' id='questionGuy'></p>
+            <p>
+                In this game of Hi-Low, you are given 10 guesses to guess a mystery number.
+                Once you successfully guess the number, your remaining guesses carry over to the next round.
+                Your goal is to make it through as many rounds as possible before you run out of guesses!
+            </p>
+        </div>
         <button id='startButton' v-on:click='startNewGame()'>New Game</button>
         <div v-show='gameCount > 0'>
             <h3>Round {{ gameCount }}</h3>
@@ -79,7 +86,7 @@
             </p>
             <guess-feedback v-bind:guesses='guesses' v-bind:winning='winning' v-bind:feedback='feedback'
                 v-bind:round-over='roundOver' v-bind:game-over='gameOver' v-bind:game-count='gameCount'
-                v-on:next-game='nextGame($event)'>
+                v-bind:previous-guesses='previousGuesses' v-on:next-game='nextGame($event)'>
             </guess-feedback>
             <score-board v-bind:scores='scores' v-bind:history='history' v-on:reset-game='resetGame($event)'>
             </score-board>
@@ -89,6 +96,7 @@
         <div id='guess-feedback-section'>
             &nbsp;
             <span v-bind:class='{correct: winning, error: !winning}'>{{ feedback }}</span>
+            <p v-if='previousGuesses.length>0'>So far, you've guessed: {{ previousGuesses.toString() }}</p>
             <p v-if='gameOver'>
                 <span>You won {{ gameCount - 1 }} round{{ gameCount !== 2 ? 's' : '' }}. Start a new game to play again.</span>
             </p>

@@ -7,6 +7,7 @@ const HiLow = {
             guesses: 10,
             guessCount: 0,
             currentGuess: null,
+            previousGuesses: [],
             instructions: `Guess what number I'm thinking of between 1 and 10 (inclusive)!`,
             winning: false,
             feedback: null,
@@ -23,6 +24,7 @@ const HiLow = {
             this.feedback = '';
             this.winning = false;
             this.currentGuess = null;
+            this.previousGuesses = [];
             this.roundOver = false;
             this.gameOver = false;
             this.mysteryNumber = Math.floor(Math.random() * 10 + 1);
@@ -38,9 +40,9 @@ const HiLow = {
             this.winning = false;
             this.roundOver = false;
             this.currentGuess = null;
+            this.previousGuesses = [];
             this.mysteryNumber = Math.floor(Math.random() * 10 + 1);
             console.log(`secret number is: ${this.mysteryNumber}`);
-            this.guesses = this.guesses === 1 ? 1 : this.guesses - 1;
             this.guessCount = 0;
             this.gameCount++;
             console.log(`gamecount is ${this.gameCount}`);
@@ -48,8 +50,10 @@ const HiLow = {
         resetGame() {
             this.feedback = '';
             this.currentGuess = null;
+            this.previousGuesses = [];
             this.roundOver = false;
             this.gameOver = false;
+            this.winning = false;
             this.mysteryNumber = Math.floor(Math.random() * 10 + 1);
             console.log(`secret number is: ${this.mysteryNumber}`);
             this.guesses = 10;
@@ -70,16 +74,19 @@ const HiLow = {
                     this.guesses--;
                     this.guessCount++;
                     this.winning = true;
+                    this.previousGuesses.push(this.currentGuess);
                     this.feedback = `Congratulations, you got it!`
                     this.scores.push({ winner: 'Player', gameCount: this.gameCount, numGuesses: this.guessCount });
                     this.roundOver = true;
                 } else if (this.currentGuess < this.mysteryNumber) {
                     this.guesses--;
                     this.guessCount++;
+                    this.previousGuesses.push(this.currentGuess);
                     this.feedback = "Too low, try again."
                 } else if (this.currentGuess > this.mysteryNumber) {
                     this.guesses--;
                     this.guessCount++;
+                    this.previousGuesses.push(this.currentGuess);
                     this.feedback = "Too high, try again."
                 } else {
                     this.feedback = "I didn't quite understand you. Please try again."
@@ -119,6 +126,9 @@ const GuessFeedback = {
         },
         gameCount: {
             type: Number
+        },
+        previousGuesses: {
+            type: Array
         }
     },
     template: '#guess-feedback',
