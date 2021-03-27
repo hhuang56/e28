@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang='en'>
+
+<head>
+    <title>Word Scramble</title>
+    <meta charset='utf-8'>
+    <link href=data:, rel=icon>
+
+    <script src='js/app.js' defer></script>
+    <style>
+        [v-cloak] {
+            display: none
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Word Scramble</h1>
+
+    <div id='app' v-cloak>
+        <div v-if='!started'>
+            <label>
+                Enter your player name:
+                <input type='text' v-model='playerName' v-on:keyup.enter='startGame()'>
+            </label>
+            <p>
+                <input type='radio' id='easy' value='easy' v-model='level'>
+                <label for='easy'>Easy</label>
+            </p>
+            <p>
+                <input type='radio' id='medium' value='medium' v-model='level'>
+                <label for='moderate'>Medium</label>
+            </p>
+            <p>
+                <input type='radio' id='hard' value='hard' v-model='level'>
+                <label for='difficult'>Hard</label>
+            </p>
+            <button id='startButton' v-on:click='startGame()'>Start New Game</button>
+        </div>
+        <div v-else>
+            <p>
+                <span>Game on {{ playerName }}!</span>
+            </p>
+            <p>
+                <span> Your mystery word is: {{ scrambledWord }}</span>
+            </p>
+            <p>
+                <span> Hint: {{ mysteryWord.hint }}</span>
+            </p>
+            <p>
+                <label>
+                    Guess:
+                    <input type='text' v-model='guess' v-on:keyup.enter='guessWord()'>
+                </label>
+                <button id='guessButton' v-on:click='guessWord()'>Guess</button>
+            </p>
+        </div>
+        <guess-feedback v-bind:winning='winning' v-bind:wrong='wrong' v-bind:feedback='feedback'
+            v-on:start-game='startGame($event)'></guess-feedback>
+    </div>
+</body>
+
+</html>
