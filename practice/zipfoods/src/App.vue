@@ -25,11 +25,16 @@
       </ul>
     </nav>
     <!--<component v-bind:is="linkComponents[page]"></component>-->
-    <router-view />
+    <router-view
+      v-bind:products="products"
+      v-on:update-products="loadProducts"
+    />
   </div>
 </template>
 
 <script>
+import { axios } from "@/common/app.js";
+
 export default {
   name: "App",
   /*components: {
@@ -39,11 +44,13 @@ export default {
   },*/
   data() {
     return {
-      links: ["home", "products", "categories"],
+      products: [],
+      links: ["home", "products", "categories", "add a product"],
       paths: {
         home: "/",
         products: "/products",
         categories: "/categories",
+        "add a product": "/product/new",
       },
       /*page: "home",
       linkComponents: {
@@ -52,6 +59,16 @@ export default {
         categories: "categories-page",
       },*/
     };
+  },
+  mounted() {
+    this.loadProducts();
+  },
+  methods: {
+    loadProducts() {
+      axios.get("product").then((response) => {
+        this.products = response.data.product;
+      });
+    },
   },
 };
 </script>

@@ -6,6 +6,8 @@ import HomePage from "./components/pages/HomePage.vue";
 import CategoriesPage from "./components/pages/CategoriesPage.vue";
 import ProductsPage from "./components/pages/ProductsPage.vue";
 import ProductPage from "./components/pages/ProductPage.vue";
+import ProductCreatePage from "./components/pages/ProductCreatePage.vue";
+
 
 
 const router = createRouter({
@@ -27,7 +29,11 @@ const router = createRouter({
         {
             path: '/categories',
             component: CategoriesPage
-        }
+        },
+        {
+            path: '/product/new',
+            component: ProductCreatePage
+        },
     ]
 })
 

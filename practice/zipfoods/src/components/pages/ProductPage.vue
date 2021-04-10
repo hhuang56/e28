@@ -16,7 +16,6 @@
 <script>
 import ShowProduct from "@/components/ShowProduct.vue";
 import ErrorPage from "@/components/pages/ErrorPage.vue";
-import { products } from "@/common/products.js";
 
 export default {
   components: {
@@ -27,11 +26,10 @@ export default {
     id: {
       type: String,
     },
-  },
-  data() {
-    return {
-      products: products,
-    };
+    products: {
+      type: Array,
+      default: null,
+    },
   },
   computed: {
     selectedProduct() {

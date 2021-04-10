@@ -1,0 +1,19 @@
+{
+    "seeds": [
+        {
+            "content": "This product was very good. This product was very good.",
+            "rating": 5,
+            "product_id": 1
+        },
+        {
+            "content": "This product was good. This product was good.",
+            "rating": 3,
+            "product_id": 1
+        },
+        {
+            "content": "This product was very bad. This product was very bad.",
+            "rating": 1,
+            "product_id": 2
+        }
+    ]
+}

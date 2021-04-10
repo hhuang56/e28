@@ -13,16 +13,16 @@
 
 <script>
 import ShowSimpleProduct from "@/components/ShowSimpleProduct.vue";
-import { products } from "@/common/products.js";
 
 export default {
   components: {
     "show-simple-product": ShowSimpleProduct,
   },
-  data() {
-    return {
-      products: products,
-    };
+  props: {
+    products: {
+      type: Array,
+      default: null,
+    },
   },
 };
 </script>

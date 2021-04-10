@@ -6,10 +6,7 @@
       }}</router-link>
     </div>
 
-    <img
-      class="thumb"
-      v-bind:src="require('@/assets/images/products/' + product.id + '.jpg')"
-    />
+    <img class="thumb" v-bind:src="imgSrc" />
   </div>
 </template>
 
@@ -18,6 +15,17 @@ export default {
   props: {
     product: {
       type: Object,
+    },
+  },
+  computed: {
+    imgSrc() {
+      // ref: https://javascript.info/try-catch
+      try {
+        return require("@/assets/images/products/" + this.product.id + ".jpg");
+      } catch (e) {
+        // This image-not-available.jpg file was included with the other images I had you download when we first set up ZipFoods
+        return require("@/assets/images/products/image-not-available.jpg");
+      }
     },
   },
 };
