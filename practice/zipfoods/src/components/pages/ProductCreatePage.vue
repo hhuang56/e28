@@ -3,33 +3,73 @@
     <h2>Add a Product</h2>
 
     <div id="inputs">
-      <label for="name">Name</label>
-      <input type="text" v-model="product.name" id="name" />
+      <label for="name">Name <span class="required">*</span></label>
+      <input
+        type="text"
+        placeholder="3-100 chars"
+        v-model="product.name"
+        id="name"
+      />
 
-      <label for="sku">SKU:</label>
-      <input type="text" v-model="product.sku" id="sku" />
+      <label for="sku">SKU: <span class="required">*</span></label>
+      <input
+        type="text"
+        placeholder="3-100 chars; unique; letters, numbers, and _ permitted"
+        v-model="product.sku"
+        id="sku"
+      />
 
-      <label for="price">Price:</label>
-      <input type="text" v-model="product.price" id="price" />
+      <label for="price">Price: <span class="required">*</span></label>
+      <input
+        type="text"
+        placeholder="100 char min"
+        v-model="product.price"
+        id="price"
+      />
 
-      <label for="available">Quantity available:</label>
-      <input type="text" v-model="product.available" id="available" />
+      <label for="available"
+        >Quantity available: <span class="required">*</span></label
+      >
+      <input
+        type="text"
+        placeholder="numbers only"
+        v-model="product.available"
+        id="available"
+      />
 
-      <label for="weight">Weight (in lbs):</label>
-      <input type="text" v-model="product.weight" id="weight" />
+      <label for="weight"
+        >Weight (in lbs): <span class="required">*</span></label
+      >
+      <input
+        type="text"
+        placeholder="numbers only"
+        v-model="product.weight"
+        id="weight"
+      />
 
       <label for="perishable" class="form-checkbox-label">
         <input type="checkbox" v-model="product.perishable" id="perishable" />
-        Perishable?
+        Perishable? <span class="required">*</span>
       </label>
 
-      <label for="description">Description</label>
-      <textarea v-model="product.description" id="description"></textarea>
+      <label for="description"
+        >Description <span class="required">*</span></label
+      >
+      <textarea
+        placeholder="100 char min"
+        v-model="product.description"
+        id="description"
+      ></textarea>
     </div>
 
     <button v-on:click="addProduct">Add Product</button>
-    <div v-if="showConfirmation">Your product was added.</div>
-    {{ errors }}
+    <div id="confirmation" v-if="showConfirmation">
+      <p>Your product was added.</p>
+    </div>
+    <div id="error">
+      <p v-if="errors">Error(s) adding product:</p>
+      <p v-for="(error, name) in errors" v-bind:key="name">{{ error[0] }}</p>
+    </div>
   </div>
 </template>
 
@@ -62,6 +102,7 @@ export default {
         } else {
           this.$emit("update-products");
           this.showConfirmation = true;
+          this.product = {};
         }
       });
     },
@@ -72,5 +113,14 @@ export default {
 <style scoped>
 #inputs {
   text-align: left;
+}
+#confirmation {
+  color: green;
+}
+#error {
+  color: red;
+}
+.required {
+  color: red;
 }
 </style>

@@ -10,23 +10,24 @@
 </template>
 
 <script>
-import { products } from "@/common/products.js";
-
 export default {
   props: {
     category: {
       type: String,
     },
-  },
-  data() {
-    return {
-      products: products,
-    };
+    products: {
+      type: Array,
+      default: null,
+    },
   },
   computed: {
     featuredProducts() {
       return this.products.filter((product) => {
-        return product.categories.includes(this.category);
+        if (product.categories) {
+          return product.categories.includes(this.category);
+        } else {
+          return false;
+        }
       }, this.category);
     },
   },
