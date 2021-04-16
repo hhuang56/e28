@@ -76,6 +76,7 @@ export default {
         } else {
           this.$emit("update-recipes");
           this.showConfirmation = true;
+          this.errors = false;
           this.recipe = {};
         }
       });
