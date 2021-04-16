@@ -13,6 +13,13 @@
             "instruction": "Cook tomatoes til they're goop. Fry steak on the side. Mix the two. Salt to taste.",
             "key_ingredient": "steak,tomatoes",
             "num_like": 5
+        },
+        {
+            "name": "Bean Dip",
+            "description": "In case you have a hummus craving.",
+            "instruction": "Mash beans and simmer until no longer watery. Salt and spice to taste.",
+            "key_ingredient": "beans",
+            "num_like": 0
         }
     ]
 }
