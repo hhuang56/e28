@@ -1,0 +1,36 @@
+{
+    "permission_level": 0,
+    "fields": {
+        "name": {
+            "type": "string",
+            "validators": [
+                "required"
+            ]
+        },
+        "key_ingredient": {
+            "type": "string",
+            "validators": [
+                "required"
+            ]
+        },
+        "description": {
+            "type": "text",
+            "validators": [
+                "required"
+            ]
+        },
+        "instruction": {
+            "type": "text",
+            "validators": [
+                "required"
+            ]
+        },
+        "num_like": {
+            "type": "integer",
+            "validators": [
+                "required",
+                "numeric"
+            ]
+        }
+    }
+}

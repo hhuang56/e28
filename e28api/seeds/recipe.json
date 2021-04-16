@@ -1,0 +1,18 @@
+{
+    "seeds": [
+        {
+            "name": "Chicken Stew",
+            "description": "Can't get this one wrong.",
+            "instruction": "Dump everything into water or stock. Salt, pepper, and spice to taste. Let simmer until everything is mush.",
+            "key_ingredient": "chicken,tomatoes",
+            "num_like": 2
+        },
+        {
+            "name": "Tomatoes and Steak",
+            "description": "A simple classic served best on rice.",
+            "instruction": "Cook tomatoes til they're goop. Fry steak on the side. Mix the two. Salt to taste.",
+            "key_ingredient": "steak,tomatoes",
+            "num_like": 5
+        }
+    ]
+}
