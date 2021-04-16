@@ -3,7 +3,7 @@
     <img alt="kitchen-scene" src="@/assets/images/kitchen.jpg" id="logo" />
     <p id="catchphrase">
       Have random ingredients in your fridge? Search our recipe book for unique
-      recipes to help finish what you've got.
+      recipes to help you finish what you've got.
     </p>
     <nav>
       <ul>
