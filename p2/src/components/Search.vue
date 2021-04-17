@@ -18,6 +18,7 @@
       v-for="(recipe, index) in searchResults"
       v-bind:key="index"
       v-bind:recipe="recipe"
+      v-on:increment-num-like="incrementNumLike($event)"
     />
   </div>
   <div v-if="searchResults.length === 0">
@@ -26,6 +27,7 @@
 </template>
 
 <script>
+import { axios } from "@/common/app.js";
 import { ingredients } from "@/common/ingredients.js";
 import RecipeCard from "@/components/RecipeCard.vue";
 import IngredientButtons from "@/components/IngredientButtons.vue";
@@ -40,6 +42,7 @@ export default {
     "recipe-card": RecipeCard,
     "ingredient-buttons": IngredientButtons,
   },
+  emits: ["update-recipes"],
   data() {
     return {
       ingredients: ingredients,
@@ -70,6 +73,31 @@ export default {
           this.selectedIngredients.includes(val)
         );
       });
+    },
+    incrementNumLike(id) {
+      let mutableRecipe = {
+        ...this.recipes.filter((recipe) => {
+          return recipe.id === id;
+        })[0],
+      };
+      mutableRecipe.num_like++;
+
+      this.searchResults = this.searchResults.map((recipe) => {
+        if (recipe.id === id) {
+          recipe.num_like++;
+        }
+        return recipe;
+      });
+
+      axios
+        .put("/recipe/" + mutableRecipe.id, mutableRecipe)
+        .then((response) => {
+          if (response.data.errors) {
+            console.error(response.data.errors);
+          } else {
+            this.$emit("update-recipes");
+          }
+        });
     },
   },
 };

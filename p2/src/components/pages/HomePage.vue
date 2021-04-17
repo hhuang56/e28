@@ -1,6 +1,6 @@
 <template>
   <div id="home-page">
-    <search-bar v-bind:recipes="recipes" />
+    <search-bar v-bind:recipes="recipes" v-on:update-recipes="loadRecipes" />
   </div>
 </template>
 
@@ -15,6 +15,11 @@ export default {
   },
   components: {
     "search-bar": Search,
+  },
+  methods: {
+    loadRecipes() {
+      this.$emit("update-recipes");
+    },
   },
 };
 </script>

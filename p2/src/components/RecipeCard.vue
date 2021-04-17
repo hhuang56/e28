@@ -5,7 +5,7 @@
       <div>
         <span>{{ recipe.num_like }}</span>
         <img
-          v-on:click="$emit('incrementNumLike', recipe.id)"
+          v-on:click="$emit('increment-num-like', recipe.id)"
           id="favorite"
           src="@/assets/images/heart.png"
         />

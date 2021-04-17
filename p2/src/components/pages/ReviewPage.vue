@@ -5,14 +5,14 @@
       v-for="(recipe, index) in orderedRecipes"
       v-bind:key="index"
       v-bind:recipe="recipe"
-      v-on:incrementNumLike="incrementNumLike($event)"
+      v-on:increment-num-like="incrementNumLike($event)"
     />
   </div>
 </template>
 
 <script>
-import { axios } from "@/common/app.js";
 import RecipeCard from "@/components/RecipeCard.vue";
+import { axios } from "@/common/app.js";
 
 export default {
   props: {
