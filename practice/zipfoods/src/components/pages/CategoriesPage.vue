@@ -11,12 +11,6 @@
 
 <script>
 export default {
-  props: {
-    products: {
-      type: Array,
-      default: null,
-    },
-  },
   computed: {
     categories() {
       let categories = this.products.map((product) => {
@@ -27,6 +21,9 @@ export default {
 
       // Return unique, sorted categories
       return [...new Set(mergedCategories)].sort();
+    },
+    products() {
+      return this.$store.state.products;
     },
   },
 };

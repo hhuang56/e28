@@ -19,6 +19,7 @@
             v-for="link in links"
             v-bind:key="link"
             v-bind:to="paths[link]"
+            ><span v-if="link == 'cart'">({{ cartCount }}) </span
             >{{ link }}</router-link
           >
         </li>
@@ -33,7 +34,7 @@
 </template>
 
 <script>
-import { axios } from "@/common/app.js";
+import { cart } from "@/common/app.js";
 
 export default {
   name: "App",
@@ -44,13 +45,13 @@ export default {
   },*/
   data() {
     return {
-      products: [],
-      links: ["home", "products", "categories", "add a product"],
+      links: ["home", "products", "categories", "add a product", "cart"],
       paths: {
         home: "/",
         products: "/products",
         categories: "/categories",
         "add a product": "/product/new",
+        cart: "/cart",
       },
       /*page: "home",
       linkComponents: {
@@ -60,14 +61,21 @@ export default {
       },*/
     };
   },
+  computed: {
+    cartCount() {
+      return this.$store.state.cartCount;
+    },
+    products() {
+      return this.$store.state.products;
+    },
+  },
   mounted() {
     this.loadProducts();
+    this.$store.commit("setCartCount", cart.count());
   },
   methods: {
     loadProducts() {
-      axios.get("product").then((response) => {
-        this.products = response.data.product;
-      });
+      this.$store.dispatch("fetchProducts");
     },
   },
 };

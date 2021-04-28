@@ -26,16 +26,14 @@ export default {
     id: {
       type: String,
     },
-    products: {
-      type: Array,
-      default: null,
-    },
   },
   computed: {
     selectedProduct() {
-      return this.products.filter((product) => {
-        return product.id === parseInt(this.id);
-      });
+      console.log(this.id);
+      return this.$store.getters.getProductById(this.id);
+    },
+    products() {
+      return this.$store.state.products;
     },
   },
 };

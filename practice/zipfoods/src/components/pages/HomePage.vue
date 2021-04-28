@@ -15,14 +15,13 @@
 import ShowFeatured from "@/components/ShowFeatured.vue";
 
 export default {
-  props: {
-    products: {
-      type: Array,
-      default: null,
-    },
-  },
   components: {
     "show-featured": ShowFeatured,
+  },
+  computed: {
+    products() {
+      return this.$store.state.products;
+    },
   },
 };
 </script>

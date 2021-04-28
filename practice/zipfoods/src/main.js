@@ -2,12 +2,13 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import { createRouter, createWebHistory } from 'vue-router';
 
+import { store } from '@/common/store.js';
 import HomePage from "./components/pages/HomePage.vue";
 import CategoriesPage from "./components/pages/CategoriesPage.vue";
 import ProductsPage from "./components/pages/ProductsPage.vue";
 import ProductPage from "./components/pages/ProductPage.vue";
 import ProductCreatePage from "./components/pages/ProductCreatePage.vue";
-
+import CartPage from "./components/pages/CartPage.vue";
 
 
 const router = createRouter({
@@ -34,7 +35,11 @@ const router = createRouter({
             path: '/product/new',
             component: ProductCreatePage
         },
+        {
+            path: '/cart',
+            component: CartPage
+        },
     ]
 })
 
-createApp(App).use(router).mount('#app')
+createApp(App).use(router).use(store).mount('#app')

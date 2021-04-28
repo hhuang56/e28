@@ -18,10 +18,9 @@ export default {
   components: {
     "show-simple-product": ShowSimpleProduct,
   },
-  props: {
-    products: {
-      type: Array,
-      default: null,
+  computed: {
+    products() {
+      return this.$store.state.products;
     },
   },
 };

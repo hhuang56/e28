@@ -10,6 +10,7 @@
     <div v-if="!editing">
       <div class="price">${{ mutableProduct.price }}</div>
       <p class="description">{{ mutableProduct.description }}</p>
+      <button v-on:click="addToCart">Add to cart</button>
     </div>
     <div v-if="editing">
       <div id="inputs">
@@ -75,7 +76,6 @@
           id="description"
         ></textarea>
       </div>
-
       <button v-on:click="updateProduct">Update Product</button>
       <div id="confirmation" v-if="showConfirmation">
         <p>Your product was updated.</p>
@@ -89,7 +89,7 @@
 </template>
 
 <script>
-import { axios } from "@/common/app.js";
+import { axios, cart } from "@/common/app.js";
 
 export default {
   props: {
@@ -117,6 +117,10 @@ export default {
     },
   },
   methods: {
+    addToCart() {
+      cart.add(this.product.id);
+      this.$store.commit("setCartCount", cart.count());
+    },
     updateProduct() {
       axios
         .put("/product/" + this.mutableProduct.id, this.mutableProduct)
