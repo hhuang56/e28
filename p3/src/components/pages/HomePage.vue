@@ -1,6 +1,6 @@
 <template>
   <div id="home-page">
-    <search-bar v-bind:recipes="recipes" v-on:update-recipes="loadRecipes" />
+    <search-bar v-on:update-recipes="loadRecipes" />
   </div>
 </template>
 
@@ -8,13 +8,13 @@
 import Search from "@/components/Search.vue";
 
 export default {
-  props: {
-    recipes: {
-      type: Array,
-    },
-  },
   components: {
     "search-bar": Search,
+  },
+  computed: {
+    recipes() {
+      return this.$store.state.recipes;
+    },
   },
   methods: {
     loadRecipes() {

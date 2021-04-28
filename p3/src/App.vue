@@ -17,18 +17,15 @@
         </li>
       </ul>
     </nav>
-    <router-view v-bind:recipes="recipes" v-on:update-recipes="loadRecipes" />
+    <router-view v-on:update-recipes="loadRecipes" />
   </div>
 </template>
 
 <script>
-import { axios } from "@/common/app.js";
-
 export default {
   name: "App",
   data() {
     return {
-      recipes: [],
       links: ["search", "contribute", "ratings"],
       paths: {
         search: "/",
@@ -42,14 +39,12 @@ export default {
   },
   methods: {
     loadRecipes() {
-      axios.get("recipe").then((response) => {
-        this.recipes = response.data.recipe;
-      });
+      this.$store.dispatch("getRecipes");
     },
   },
 };
 </script>
 
-<style src='@/assets/css/p2.css'></style>
+<style src='@/assets/css/p3.css'></style>
 <style>
 </style>

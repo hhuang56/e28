@@ -12,18 +12,15 @@
 
 <script>
 import RecipeCard from "@/components/RecipeCard.vue";
-import { axios } from "@/common/app.js";
 
 export default {
-  props: {
-    recipes: {
-      type: Array,
-    },
-  },
   components: {
     "recipe-card": RecipeCard,
   },
   computed: {
+    recipes() {
+      return this.$store.state.recipes;
+    },
     orderedRecipes() {
       return this.recipes.slice(0).sort(function (recipe1, recipe2) {
         return recipe2.num_like - recipe1.num_like;
@@ -38,15 +35,8 @@ export default {
         })[0],
       };
       mutableRecipe.num_like++;
-      axios
-        .put("/recipe/" + mutableRecipe.id, mutableRecipe)
-        .then((response) => {
-          if (response.data.errors) {
-            console.error(response.data.errors);
-          } else {
-            this.$emit("update-recipes");
-          }
-        });
+
+      this.$store.dispatch("updateRecipe", mutableRecipe);
     },
   },
 };

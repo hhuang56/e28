@@ -27,17 +27,11 @@
 </template>
 
 <script>
-import { axios } from "@/common/app.js";
 import { ingredients } from "@/common/ingredients.js";
 import RecipeCard from "@/components/RecipeCard.vue";
 import IngredientButtons from "@/components/IngredientButtons.vue";
 
 export default {
-  props: {
-    recipes: {
-      type: Array,
-    },
-  },
   components: {
     "recipe-card": RecipeCard,
     "ingredient-buttons": IngredientButtons,
@@ -51,6 +45,11 @@ export default {
       selectedIngredients: [],
       searchResults: [],
     };
+  },
+  computed: {
+    recipes() {
+      return this.$store.state.recipes;
+    },
   },
   methods: {
     computeButtonClass: function (ingredient) {
@@ -89,15 +88,7 @@ export default {
         return recipe;
       });
 
-      axios
-        .put("/recipe/" + mutableRecipe.id, mutableRecipe)
-        .then((response) => {
-          if (response.data.errors) {
-            console.error(response.data.errors);
-          } else {
-            this.$emit("update-recipes");
-          }
-        });
+      this.$store.dispatch("updateRecipe", mutableRecipe);
     },
   },
 };
