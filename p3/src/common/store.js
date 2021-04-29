@@ -10,13 +10,18 @@ export const store = createStore({
     state() {
         return {
             recipes: [],
+            user: null
         }
     },
     // methods used to alter the state of the store
     mutations: {
         setRecipes(state, payload) {
             state.recipes = payload;
-        }
+        },
+        setUser(state, payload) {
+            state.user = payload;
+        },
+
     },
     // methods that can contain async code
     // cannot directly alter state
@@ -43,7 +48,14 @@ export const store = createStore({
                         context.commit('setRecipes', newRecipes);
                     }
                 });
-        }
+        },
+        authUser(context) {
+            axios.post('auth').then((response) => {
+                if (response.data.authenticated) {
+                    context.commit('setUser', response.data.user);
+                }
+            });
+        },
     },
     getters: {
         search: (state) => (selectedIngredients) => {

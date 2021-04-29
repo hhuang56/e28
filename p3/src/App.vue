@@ -26,16 +26,18 @@ export default {
   name: "App",
   data() {
     return {
-      links: ["search", "contribute", "ratings"],
+      links: ["search", "contribute", "ratings", "account"],
       paths: {
         search: "/",
         contribute: "/contribute",
         ratings: "/ratings",
+        account: "/account",
       },
     };
   },
   mounted() {
     this.loadRecipes();
+    this.$store.dispatch("authUser");
   },
   methods: {
     loadRecipes() {

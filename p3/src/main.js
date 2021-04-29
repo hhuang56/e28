@@ -6,6 +6,7 @@ import { store } from '@/common/store.js';
 import HomePage from "./components/pages/HomePage.vue";
 import AddRecipePage from "./components/pages/AddRecipePage.vue";
 import ReviewPage from "./components/pages/ReviewPage.vue";
+import AccountPage from "./components/pages/AccountPage.vue";
 
 
 const router = createRouter({
@@ -24,6 +25,10 @@ const router = createRouter({
             path: '/ratings',
             component: ReviewPage,
             props: true
+        },
+        {
+            path: '/account',
+            component: AccountPage,
         },
     ]
 })
