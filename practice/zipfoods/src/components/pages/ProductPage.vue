@@ -30,6 +30,7 @@ export default {
   computed: {
     selectedProduct() {
       console.log(this.id);
+      console.log(this.$store.getters.getProductById(this.id));
       return this.$store.getters.getProductById(this.id);
     },
     products() {

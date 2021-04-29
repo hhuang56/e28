@@ -45,12 +45,20 @@ export default {
   },*/
   data() {
     return {
-      links: ["home", "products", "categories", "add a product", "cart"],
+      links: [
+        "home",
+        "products",
+        "categories",
+        "add a product",
+        "account",
+        "cart",
+      ],
       paths: {
         home: "/",
         products: "/products",
         categories: "/categories",
         "add a product": "/product/new",
+        account: "/account",
         cart: "/cart",
       },
       /*page: "home",
@@ -72,6 +80,7 @@ export default {
   mounted() {
     this.loadProducts();
     this.$store.commit("setCartCount", cart.count());
+    this.$store.dispatch("authUser");
   },
   methods: {
     loadProducts() {

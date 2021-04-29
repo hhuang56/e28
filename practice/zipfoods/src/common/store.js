@@ -11,6 +11,7 @@ export const store = createStore({
         return {
             cartCount: 0,
             products: [],
+            user: null
         }
     },
     // methods used to alter the state of the store
@@ -20,7 +21,10 @@ export const store = createStore({
         },
         setProducts(state, payload) {
             state.products = payload;
-        }
+        },
+        setUser(state, payload) {
+            state.user = payload;
+        },
     },
     // methods that can contain async code
     // cannot directly alter state
@@ -30,11 +34,17 @@ export const store = createStore({
             axios.get("product").then((response) => {
                 context.commit('setProducts', response.data.product);
             });
-        }
+        },
+        authUser(context) {
+            axios.post('auth').then((response) => {
+                if (response.data.authenticated) {
+                    context.commit('setUser', response.data.user);
+                }
+            });
+        },
     },
     getters: {
         getProductById: (state) => (id) => {
-            console.log(state.products);
             return state.products.filter((product) => {
                 return product.id == id;
             }, id);
