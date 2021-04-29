@@ -46,11 +46,14 @@ export const store = createStore({
         }
     },
     getters: {
-        getProductById: (state) => (id) => {
-            console.log(state.products);
-            return state.products.filter((product) => {
-                return product.id == id;
-            }, id);
+        search: (state) => (selectedIngredients) => {
+            return state.recipes.filter((recipe) => {
+                if (selectedIngredients.length === 0) return false;
+                const recipe_ingredients = recipe.key_ingredient.split(",");
+                return recipe_ingredients.every((val) =>
+                    selectedIngredients.includes(val)
+                );
+            });
         }
     }
 })

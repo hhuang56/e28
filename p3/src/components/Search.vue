@@ -43,12 +43,14 @@ export default {
       errors: null,
       showConfirmation: false,
       selectedIngredients: [],
-      searchResults: [],
     };
   },
   computed: {
     recipes() {
       return this.$store.state.recipes;
+    },
+    searchResults() {
+      return this.$store.getters.search(this.selectedIngredients);
     },
   },
   methods: {
@@ -65,13 +67,6 @@ export default {
           return ingredient !== elem;
         });
       }
-      this.searchResults = this.recipes.filter((recipe) => {
-        if (this.selectedIngredients.length === 0) return false;
-        const recipe_ingredients = recipe.key_ingredient.split(",");
-        return recipe_ingredients.every((val) =>
-          this.selectedIngredients.includes(val)
-        );
-      });
     },
     incrementNumLike(id) {
       let mutableRecipe = {
