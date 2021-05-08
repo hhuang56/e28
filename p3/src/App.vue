@@ -36,8 +36,8 @@ export default {
     };
   },
   mounted() {
-    this.loadRecipes();
     this.$store.dispatch("authUser");
+    this.loadRecipes();
   },
   methods: {
     loadRecipes() {

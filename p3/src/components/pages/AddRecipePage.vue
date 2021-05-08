@@ -8,17 +8,27 @@
 
     <div id="inputs">
       <label for="name">Name <span class="required">*</span></label>
-      <input type="text" v-model="recipe.name" id="name" />
+      <input type="text" v-model="recipe.name" id="name" v-on:blur="validate" />
 
       <label for="description"
         >Description <span class="required">*</span></label
       >
-      <input type="text" v-model="recipe.description" id="description" />
+      <input
+        type="text"
+        v-model="recipe.description"
+        id="description"
+        v-on:blur="validate"
+      />
 
       <label for="instruction"
         >Instructions <span class="required">*</span></label
       >
-      <input type="text" v-model="recipe.instruction" id="instruction" />
+      <input
+        type="text"
+        v-model="recipe.instruction"
+        id="instruction"
+        v-on:blur="validate"
+      />
 
       <label for="key-ingredient"
         >Key Ingredients <span class="required">*</span></label
@@ -26,6 +36,7 @@
       <ingredient-buttons
         v-on:toggleIngredient="toggleIngredient($event)"
         v-bind:selectedIngredients="selectedIngredients"
+        v-on:blur="validate"
       />
     </div>
 
@@ -43,6 +54,7 @@
 <script>
 import { axios } from "@/common/app.js";
 import IngredientButtons from "@/components/IngredientButtons.vue";
+import Validator from "validatorjs";
 
 export default {
   components: {
@@ -67,19 +79,37 @@ export default {
       }
     },
     addRecipe() {
-      this.recipe.key_ingredient = this.selectedIngredients.toString();
-      this.recipe.num_like = 0;
-      axios.post("/recipe", this.recipe).then((response) => {
-        if (response.data.errors) {
-          this.errors = response.data.errors;
-          this.showConfirmation = false;
-        } else {
-          this.$emit("update-recipes");
-          this.showConfirmation = true;
-          this.errors = false;
-          this.recipe = {};
-        }
+      if (this.validate()) {
+        this.recipe.key_ingredient = this.selectedIngredients.toString();
+        this.recipe.num_like = 0;
+        axios.post("/recipe", this.recipe).then((response) => {
+          if (response.data.errors) {
+            this.errors = response.data.errors;
+            this.showConfirmation = false;
+          } else {
+            this.$emit("update-recipes");
+            this.showConfirmation = true;
+            this.errors = false;
+            this.recipe = {};
+          }
+        });
+      }
+    },
+    validate() {
+      let validator = new Validator(this.product, {
+        name: "required",
+        key_ingredient: "required",
+        description: "required",
+        instruction: "required",
       });
+
+      if (validator.fails()) {
+        this.errors = validator.errors.all();
+      } else {
+        this.errors = null;
+      }
+
+      return validator.passes();
     },
   },
 };

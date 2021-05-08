@@ -5,7 +5,14 @@
       <div>
         <span>{{ recipe.num_like }}</span>
         <img
+          v-if="!favorited"
           v-on:click="$emit('increment-num-like', recipe.id)"
+          id="favorite"
+          src="@/assets/images/heartoutline.png"
+        />
+        <img
+          v-if="favorited"
+          v-on:click="$emit('decrement-num-like', recipe.id)"
           id="favorite"
           src="@/assets/images/heart.png"
         />
@@ -24,6 +31,13 @@ export default {
   props: {
     recipe: {
       type: Object,
+    },
+  },
+  computed: {
+    favorited() {
+      console.log("favorited");
+      console.log(this.$store.getters.checkIfFavorited(this.recipe.id));
+      return this.$store.getters.checkIfFavorited(this.recipe.id);
     },
   },
 };

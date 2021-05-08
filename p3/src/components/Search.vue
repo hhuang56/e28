@@ -19,6 +19,7 @@
       v-bind:key="index"
       v-bind:recipe="recipe"
       v-on:increment-num-like="incrementNumLike($event)"
+      v-on:decrement-num-like="decrementNumLike($event)"
     />
   </div>
   <div v-if="searchResults.length === 0">
@@ -68,21 +69,43 @@ export default {
         });
       }
     },
-    incrementNumLike(id) {
+    incrementNumLike(recipeId) {
+      console.log("incrementNumLike in Search called");
       let mutableRecipe = {
         ...this.recipes.filter((recipe) => {
-          return recipe.id === id;
+          return recipe.id === recipeId;
         })[0],
       };
       mutableRecipe.num_like++;
 
       this.searchResults = this.searchResults.map((recipe) => {
-        if (recipe.id === id) {
+        if (recipe.id === recipeId) {
           recipe.num_like++;
         }
         return recipe;
       });
 
+      this.$store.dispatch("addFavorite", recipeId);
+      this.$store.dispatch("updateRecipe", mutableRecipe);
+    },
+    decrementNumLike(recipeId) {
+      console.log("decrementNumLike in Search called");
+
+      let mutableRecipe = {
+        ...this.recipes.filter((recipe) => {
+          return recipe.id === recipeId;
+        })[0],
+      };
+      mutableRecipe.num_like--;
+
+      this.searchResults = this.searchResults.map((recipe) => {
+        if (recipe.id === recipeId) {
+          recipe.num_like--;
+        }
+        return recipe;
+      });
+
+      this.$store.dispatch("removeFavorite", recipeId);
       this.$store.dispatch("updateRecipe", mutableRecipe);
     },
   },

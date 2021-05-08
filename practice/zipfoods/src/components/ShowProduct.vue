@@ -1,6 +1,6 @@
 <template>
   <div class="show-product">
-    <div class="name">
+    <div class="name" data-test="product-name">
       {{ mutableProduct.name }}
     </div>
     <p><button v-on:click="editing = true">Edit</button></p>
