@@ -1,6 +1,6 @@
 <template>
   <div id="home-page">
-    <search-bar v-on:update-recipes="loadRecipes" />
+    <search-bar />
   </div>
 </template>
 

@@ -24,6 +24,7 @@ VARIABLES
     --silver: #DDDDDD;
     --gray: #AAAAAA;
     --black: #111111;
+    --dark-gray: #444444;
 }
 
 
@@ -114,7 +115,7 @@ nav ul li a.router-link-active:hover,
 nav ul li a.router-link-active:active {
     text-decoration: none;
     color: var(--white);
-    background-color: var(--blue);
+    background-color: var(--black);
     cursor: inherit;
 }
 
@@ -174,6 +175,8 @@ textarea {
     padding: 5px;
     width: 100%;
     border: 1px solid var(--silver);
+    font-family: "Tahoma", "Arial", "Arabic Transparent";
+
 }
 
 .form-input-error {
@@ -211,9 +214,9 @@ label.form-checkbox-label {
 }
 
 button {
-    background-color: var(--blue);
-    font-size: 20px;
-    margin-top: 10px;
+    background-color: var(--gray);
+    font-size: 18px;
+    margin: 5px;
     border-radius: 5px;
     border: 0;
     padding: 10px;
@@ -222,7 +225,7 @@ button {
 }
 
 button:hover {
-    background-color: var(--dark-blue);
+    background-color: var(--dark-gray);
 
 }
 

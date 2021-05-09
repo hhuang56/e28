@@ -18,11 +18,9 @@
       v-for="(recipe, index) in searchResults"
       v-bind:key="index"
       v-bind:recipe="recipe"
-      v-on:increment-num-like="incrementNumLike($event)"
-      v-on:decrement-num-like="decrementNumLike($event)"
     />
   </div>
-  <div v-if="searchResults.length === 0">
+  <div v-if="searchResults.length === 0 && selectedIngredients.length > 0">
     <p><i>No results returned for your search.</i></p>
   </div>
 </template>
@@ -37,7 +35,6 @@ export default {
     "recipe-card": RecipeCard,
     "ingredient-buttons": IngredientButtons,
   },
-  emits: ["update-recipes"],
   data() {
     return {
       ingredients: ingredients,
@@ -68,45 +65,6 @@ export default {
           return ingredient !== elem;
         });
       }
-    },
-    incrementNumLike(recipeId) {
-      console.log("incrementNumLike in Search called");
-      let mutableRecipe = {
-        ...this.recipes.filter((recipe) => {
-          return recipe.id === recipeId;
-        })[0],
-      };
-      mutableRecipe.num_like++;
-
-      this.searchResults = this.searchResults.map((recipe) => {
-        if (recipe.id === recipeId) {
-          recipe.num_like++;
-        }
-        return recipe;
-      });
-
-      this.$store.dispatch("addFavorite", recipeId);
-      this.$store.dispatch("updateRecipe", mutableRecipe);
-    },
-    decrementNumLike(recipeId) {
-      console.log("decrementNumLike in Search called");
-
-      let mutableRecipe = {
-        ...this.recipes.filter((recipe) => {
-          return recipe.id === recipeId;
-        })[0],
-      };
-      mutableRecipe.num_like--;
-
-      this.searchResults = this.searchResults.map((recipe) => {
-        if (recipe.id === recipeId) {
-          recipe.num_like--;
-        }
-        return recipe;
-      });
-
-      this.$store.dispatch("removeFavorite", recipeId);
-      this.$store.dispatch("updateRecipe", mutableRecipe);
     },
   },
 };

@@ -57,8 +57,6 @@ export const store = createStore({
                 if (response.data.authenticated) {
                     context.commit('setUser', response.data.user);
                     axios.get("favorite/query?user_id=" + context.state.user.id).then((response) => {
-                        console.log("authUser called");
-                        console.log(response.data.favorite);
                         context.commit(
                             'setFavorites',
                             response.data.favorite
@@ -76,30 +74,17 @@ export const store = createStore({
                 if (response.data.errors) {
                     console.error(response.data.errors);
                 } else {
-                    console.log("add fav successful");
-                    console.log(response);
-                    let favorites = context.state.favorites;
-                    console.log("context.state.favorites before")
-                    console.log(favorites);
                     context.commit('setFavorites', context.state.favorites.concat(response.data.favorite));
-                    console.log("context.state.favorites after")
-                    console.log(context.state.favorites);
                 }
             });
         },
         removeFavorite(context, recipeId) {
-            console.log("remove favorite");
-            console.log(recipeId);
             let favoritedRecipeId = context.getters.getFavoriteByRecipeId(recipeId).id;
-            console.log('favoritedRecipeId');
-            console.log(favoritedRecipeId);
 
             axios.delete(`/favorite/${favoritedRecipeId}`).then((response) => {
                 if (response.data.errors) {
-                    console.log("unfavorite failed");
                     console.error(response.data.errors);
                 } else {
-                    console.log("unfavorite success");
                     context.commit('setFavorites', context.state.favorites.filter((favorite) => {
                         return favorite.id !== favoritedRecipeId
                     }));
@@ -123,8 +108,6 @@ export const store = createStore({
             }, id);
         },
         checkIfFavorited: (state) => (id) => {
-            console.log("checkIfFavorited called");
-            console.log(state.favorites);
             return state.favorites.filter((favorite) => {
                 return favorite.recipe_id == id;
             }, id).length > 0;

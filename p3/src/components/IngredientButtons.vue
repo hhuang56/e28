@@ -1,6 +1,7 @@
 <template>
   <div id="ingredients-selector">
     <button
+      v-bind:id="ingredient"
       v-for="ingredient in ingredients"
       v-bind:key="ingredient"
       v-on:click="$emit('toggleIngredient', ingredient)"
@@ -37,10 +38,10 @@ export default {
 
 <style scoped>
 .selected {
-  background-color: green;
-  border-color: green;
+  background-color: black;
+  border-color: black;
 }
 .selected:hover {
-  background-color: darkgreen;
+  background-color: #444444;
 }
 </style>

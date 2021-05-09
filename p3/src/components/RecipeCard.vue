@@ -1,20 +1,28 @@
 <template>
-  <div class="recipe-card">
+  <div class="recipe-card" v-bind:id="`recipe-card-${recipe.id}`">
     <div class="nameWrapper">
       <div class="name">{{ recipe.name }}</div>
       <div>
-        <span>{{ recipe.num_like }}</span>
+        <span v-bind:id="`num-liked-${recipe.id}`">{{ recipe.num_like }}</span>
         <img
-          v-if="!favorited"
-          v-on:click="$emit('increment-num-like', recipe.id)"
-          id="favorite"
+          v-if="!favorited && !loading"
+          v-on:click="incrementNumLike(recipe.id)"
+          v-bind:id="`unliked-icon-${recipe.id}`"
+          class="favorite"
           src="@/assets/images/heartoutline.png"
         />
         <img
-          v-if="favorited"
-          v-on:click="$emit('decrement-num-like', recipe.id)"
-          id="favorite"
+          v-if="favorited && !loading"
+          v-on:click="isLoggedIn ? decrementNumLike(recipe.id) : showAlert()"
+          v-bind:id="`liked-icon-${recipe.id}`"
+          class="favorite"
           src="@/assets/images/heart.png"
+        />
+        <img
+          v-if="loading"
+          v-bind:id="`loading-icon-${recipe.id}`"
+          class="favorite"
+          src="@/assets/images/loading.gif"
         />
       </div>
     </div>
@@ -33,11 +41,54 @@ export default {
       type: Object,
     },
   },
+  data() {
+    return {
+      loading: false,
+    };
+  },
   computed: {
     favorited() {
-      console.log("favorited");
-      console.log(this.$store.getters.checkIfFavorited(this.recipe.id));
-      return this.$store.getters.checkIfFavorited(this.recipe.id);
+      if (this.$store.state.user !== null) {
+        return this.$store.getters.checkIfFavorited(this.recipe.id);
+      } else {
+        return true;
+      }
+    },
+    isLoggedIn() {
+      return this.$store.state.user !== null;
+    },
+  },
+  methods: {
+    incrementNumLike(recipeId) {
+      this.loading = true;
+      setTimeout(() => {
+        this.loading = false;
+      }, 500);
+
+      let mutableRecipe = {
+        ...this.recipe,
+      };
+      mutableRecipe.num_like++;
+
+      this.$store.dispatch("addFavorite", recipeId);
+      this.$store.dispatch("updateRecipe", mutableRecipe);
+    },
+    decrementNumLike(recipeId) {
+      this.loading = true;
+      setTimeout(() => {
+        this.loading = false;
+      }, 500);
+
+      let mutableRecipe = {
+        ...this.recipe,
+      };
+      mutableRecipe.num_like--;
+
+      this.$store.dispatch("removeFavorite", recipeId);
+      this.$store.dispatch("updateRecipe", mutableRecipe);
+    },
+    showAlert() {
+      window.alert("Login to Favorite recipes!");
     },
   },
 };
@@ -86,7 +137,7 @@ export default {
   font-size: 2rem;
   padding: 10px;
 }
-#favorite {
+.favorite {
   width: 20px;
   margin-left: auto;
   cursor: pointer;
