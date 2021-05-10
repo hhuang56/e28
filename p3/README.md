@@ -22,4 +22,4 @@ Users must log in order to favorite a recipe and increase the "like" counter. A 
 
 ## E2E Testing screenshot
 
-![Recipe Book App passing E2E tests](https://raw.githubusercontent.com/susanBuck/e28/main/p3/p3e2e.png)
+![Recipe Book App passing E2E tests](https://github.com/hhuang56/e28/blob/main/p3/p3e2e.png?raw=true)
