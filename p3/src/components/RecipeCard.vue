@@ -1,28 +1,27 @@
 <template>
   <div class="recipe-card" v-bind:id="`recipe-card-${recipe.id}`">
+    <loading
+      v-model:active="isLoading"
+      :is-full-page="isFullPage"
+      :opacity="0.1"
+    />
     <div class="nameWrapper">
       <div class="name">{{ recipe.name }}</div>
       <div>
         <span v-bind:id="`num-liked-${recipe.id}`">{{ recipe.num_like }}</span>
         <img
-          v-if="!favorited && !loading"
+          v-if="!favorited"
           v-on:click="incrementNumLike(recipe.id)"
           v-bind:id="`unliked-icon-${recipe.id}`"
           class="favorite"
           src="@/assets/images/heartoutline.png"
         />
         <img
-          v-if="favorited && !loading"
+          v-if="favorited"
           v-on:click="isLoggedIn ? decrementNumLike(recipe.id) : showAlert()"
           v-bind:id="`liked-icon-${recipe.id}`"
           class="favorite"
           src="@/assets/images/heart.png"
-        />
-        <img
-          v-if="loading"
-          v-bind:id="`loading-icon-${recipe.id}`"
-          class="favorite"
-          src="@/assets/images/loading.gif"
         />
       </div>
     </div>
@@ -35,7 +34,13 @@
 </template>
 
 <script>
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
+
 export default {
+  components: {
+    Loading,
+  },
   props: {
     recipe: {
       type: Object,
@@ -43,7 +48,7 @@ export default {
   },
   data() {
     return {
-      loading: false,
+      isFullPage: false,
     };
   },
   computed: {
@@ -57,13 +62,13 @@ export default {
     isLoggedIn() {
       return this.$store.state.user !== null;
     },
+    isLoading() {
+      return this.$store.state.loading;
+    },
   },
   methods: {
     incrementNumLike(recipeId) {
-      this.loading = true;
-      setTimeout(() => {
-        this.loading = false;
-      }, 500);
+      this.$store.commit("toggleLoading", true);
 
       let mutableRecipe = {
         ...this.recipe,
@@ -74,10 +79,7 @@ export default {
       this.$store.dispatch("updateRecipe", mutableRecipe);
     },
     decrementNumLike(recipeId) {
-      this.loading = true;
-      setTimeout(() => {
-        this.loading = false;
-      }, 500);
+      this.$store.commit("toggleLoading", true);
 
       let mutableRecipe = {
         ...this.recipe,
@@ -102,6 +104,7 @@ export default {
   margin: 15px;
   width: 100%;
   min-width: 300px;
+  position: relative;
 }
 .nameWrapper {
   max-height: 25px;

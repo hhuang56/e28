@@ -11,7 +11,8 @@ export const store = createStore({
         return {
             favorites: [],
             recipes: [],
-            user: null
+            user: null,
+            loading: false
         }
     },
     // methods used to alter the state of the store
@@ -24,6 +25,9 @@ export const store = createStore({
         },
         setFavorites(state, payload) {
             state.favorites = payload;
+        },
+        toggleLoading(state, payload) {
+            state.loading = payload;
         },
     },
     // methods that can contain async code
@@ -41,6 +45,7 @@ export const store = createStore({
                 .then((response) => {
                     if (response.data.errors) {
                         console.error(response.data.errors);
+                        context.commit('toggleLoading', false);
                     } else {
                         let newRecipes = context.state.recipes.map((r) => {
                             if (r.id === recipe.id) {
@@ -49,6 +54,7 @@ export const store = createStore({
                             return r;
                         });
                         context.commit('setRecipes', newRecipes);
+                        context.commit('toggleLoading', false);
                     }
                 });
         },
@@ -61,8 +67,11 @@ export const store = createStore({
                             'setFavorites',
                             response.data.favorite
                         );
+                        context.commit('toggleLoading', false);
                     });
                 }
+                context.commit('toggleLoading', false);
+
             });
         },
         addFavorite(context, recipeId) {

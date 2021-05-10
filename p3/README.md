@@ -3,19 +3,23 @@
 + Production URL: <http://e28p3.heshaley.com>
 
 ## Outside resources
-*Your list of outside resources go here*
++ Spinner: https://www.npmjs.com/package/vue-loading-overlay
 
 ## Notes for instructor
-*Any notes for me to refer to while grading; if none, omit this section*
++ The number displayed in the top right hand corner of the recipe card is the total number of likes the recipe has. Users may only favorite/like a recipe once. Recipes favorited/liked by the user are indicated with a full heart. Clicking the heart will un-favorite the recipe. A loading screen was added to prevent the user from spam-clicking the favorite/unfavorite button and causing the server to trip on itself.
+
++ The database must be reset with a bash setup for all unit tests to complete successfully.
 
 ## How is authentication being used in your application?
-*(Beyond login/registration)*
+Users must log in order to favorite a recipe and increase the "like" counter. A user does *not* have to log in to contribute a recipe.
 
 ## What data entities of your application are being managed via Vuex?
-- all recipes
-- search results through a getter
++ all recipes
++ search results through a getter
++ loading state
++ auth state
++ a user's favorite recipes
 
 ## E2E Testing screenshot
-*Include a screenshot showing the results of running all your E2E tests. This screenshot *must* be present to receive credit for the E2E testing requirement of this project. Below is an example screenshot of what is expected.*
 
-![ZipFoods passing E2E tests](https://raw.githubusercontent.com/susanBuck/e28/main/zipfoods/e2e-tests.png)
+![Recipe Book App passing E2E tests](https://raw.githubusercontent.com/susanBuck/e28/main/p3/p3e2e.png)
