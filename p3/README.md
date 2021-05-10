@@ -1,6 +1,6 @@
 # Project 3
 + By: Haley Huang
-+ Production URL: <http://e28p3.heshaley.com>
++ Production URL: <http://e28p3.heshaley.me>
 
 ## Outside resources
 + Spinner: https://www.npmjs.com/package/vue-loading-overlay
