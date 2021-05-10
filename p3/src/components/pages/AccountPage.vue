@@ -168,6 +168,8 @@ export default {
                 email: "",
                 password: "",
               };
+              this.errors = null;
+              this.serverErrors = null;
             } else {
               this.serverErrors = response.data.errors;
             }
@@ -184,6 +186,8 @@ export default {
               email: "",
               password: "",
             };
+            this.errors = null;
+            this.serverErrors = null;
             this.showLogin = true;
           } else {
             this.serverErrors = response.data.errors;
