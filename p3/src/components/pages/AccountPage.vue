@@ -163,6 +163,11 @@ export default {
           .then((response) => {
             if (response.data.authenticated) {
               this.$store.commit("setUser", response.data.user);
+              this.data = {
+                name: "",
+                email: "",
+                password: "",
+              };
             } else {
               this.serverErrors = response.data.errors;
             }
